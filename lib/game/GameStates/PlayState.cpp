@@ -7,15 +7,21 @@ void PlayState::update() {
 //		GameManager::getInstance()->pushState(new PauseState());
 //		return;
 //	}
+	for(Uint16 i = 0; i < entities.size();++i){
+		entities[i]->update();
+	}
 
 }
 
 void PlayState::render() {
-
+	for(Uint32 i=0; i < entities.size(); ++i){
+		entities[i]->render();
+	}
 }
 
 bool PlayState::onEnter() {
-
+	entities.push_back(new Catting(1,100,TILEW,TILEH,100));
+	entities.push_back(new Catting(20,120,TILEW,TILEH,100));
 	SDL_Delay(400);
 	return true;
 }

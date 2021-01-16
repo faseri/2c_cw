@@ -24,20 +24,24 @@ bool Game::create(){
 		return false;
 	}
 	SDL_SetWindowIcon(main_window, ico);
-	SDL_SetRenderDrawColor(renderer, 74, 53, 91, 255);
-	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
 
-	main_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCR_WIDTH, SCR_HEIGHT);
+	main_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCR_WIDTH+128, SCR_HEIGHT+128);
 	if(!main_texture){
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR,"Err: main texture creation failed\n");
 		return false;
 	}
-	SDL_RenderCopy(renderer, main_texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
+
+
+
 	GameManager::getInstance()->loadSuperTexture("res/spritesheet.bmp");
 
 	GameManager::getInstance()->loadFont("res/BalsamiqSans.ttf");
+
+	SDL_SetRenderDrawColor(renderer, 74, 53, 91, 255);
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, GameManager::getInstance()->getSheet(), NULL, NULL);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(300);
 
 	GameManager::getInstance()->pushState(new PlayState());
 
@@ -64,6 +68,7 @@ void Game::update(){
 }
 
 void Game::render(){
+	SDL_RenderClear(renderer);
 	GameManager::getInstance()->render();
 	SDL_RenderPresent(renderer);
 }

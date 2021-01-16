@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
 #include <limits.h>
 
+#include "../utils/GlobalVars.hpp"
+
 #pragma once
 
 class BaseEntity{
@@ -12,6 +14,7 @@ protected:
 	Uint8 texX, texY;
 	SDL_Rect offset;
 public:
+	BaseEntity(Sint16, Sint16, Uint16, Uint16, int, Uint8, Uint8);
 	BaseEntity(Sint16, Sint16, Uint16, Uint16, int);
 	virtual ~BaseEntity();
 	virtual void update() = 0;

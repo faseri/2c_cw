@@ -6,6 +6,8 @@
 #include "../GameManager.hpp"
 #include "../../utils/InputHandler.hpp"
 #include "../../entity/BaseEntity.hpp"
+#include "../../entity/Catting.hpp"
+
 
 class PlayState : public GameState{
 protected:
