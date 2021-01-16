@@ -2,21 +2,17 @@
 #include <limits.h>
 
 #pragma once
-#include "../game/Texture.hpp"
 
 class BaseEntity{
 protected:
 	int hp;
-	float posX;
-	float posY;
-	float velX;
-	float velY;
+	float posX, posY;
 	Uint8 w, h;
-	Texture* texture;
-	Uint8 texstate;
+	float velX, velY;
+	Uint8 texX, texY;
 	SDL_Rect offset;
 public:
-	BaseEntity(Sint16, Sint16, Uint16, Uint16, int, Texture*);
+	BaseEntity(Sint16, Sint16, Uint16, Uint16, int);
 	virtual ~BaseEntity();
 	virtual void update() = 0;
 	virtual void render();
@@ -28,12 +24,12 @@ public:
 	Uint8 getH();
 	Uint16 getVelX();
 	Uint16 getVelY();
-	Uint16 getTexState();
 	void setHP(int health);
 	void setPosX(Sint16 x);
 	void setPosY(Sint16 y);
 	void setVelX(Uint16 velX);
 	void setVelY(Uint16 velY);
-	void setTexState(Uint16 state);
-	void setTexture(Texture* tex);
+	Uint16 getTexX();
+	Uint16 getTexY();
+	void setTexState(Uint16 x, Uint16 y);
 };

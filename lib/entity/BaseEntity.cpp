@@ -3,14 +3,14 @@
 #include "../utils/InputHandler.hpp"
 #include "../game/Game.hpp"
 
-BaseEntity::BaseEntity(Sint16 collX, Sint16 collY, Uint16 collW, Uint16 collH, int hp, Texture* tex){
+BaseEntity::BaseEntity(Sint16 collX, Sint16 collY, Uint16 collW, Uint16 collH, int hp){
 		this->hp = hp;
 		posX = collX;
 		posY = collY;
 		w = collW;
 		h = collH;
-		texstate = 0;
-		texture = tex;
+		texX = 0;
+		texY = 0;
 		velX = 0;
 		velY = 0;
 		offset = {(Sint16)posX,(Sint16)posY,0,0};
@@ -27,7 +27,10 @@ void BaseEntity::update(){
 
 void BaseEntity::render(){
 	offset = { (Sint16)(posX), (Sint16)(posY), 0, 0};
-	SDL_RenderCopy(Game::getInstance()->getRenderer(), GameManager::getInstance()->getSheet(), texture->getRekt(texstate), &offset);
+	SDL_RenderCopy(Game::getInstance()->getRenderer(),
+					GameManager::getInstance()->getSheet(),
+					GameManager::getInstance()->getRekt(texX, texY),
+					&offset);
 }
 void BaseEntity::onCollide(BaseEntity* another){
 
@@ -54,9 +57,7 @@ Uint16 BaseEntity::getVelX(){
 Uint16 BaseEntity::getVelY(){
 	return velY;
 }
-Uint16 BaseEntity::getTexState(){
-	return texstate;
-}
+
 void BaseEntity::setHP(int health){
 	hp = health;
 }
@@ -72,11 +73,16 @@ void BaseEntity::setVelX(Uint16 velX){
 void BaseEntity::setVelY(Uint16 velY){
 	this->velY = velX;
 }
-void BaseEntity::setTexState(Uint16 state){
-	texstate = state;
+Uint16 BaseEntity::getTexX(){
+	return texX;
+}
+Uint16 BaseEntity::getTexY(){
+	return texY;
+}
+void BaseEntity::setTexState(Uint16 x,Uint16 y){
+	texX = x;
+	texY = y;
 }
 
-void BaseEntity::setTexture(Texture* tex){
-	texture = tex;
-}
+
 

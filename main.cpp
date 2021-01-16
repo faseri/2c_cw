@@ -6,12 +6,14 @@
 
 
 int main(int argc, char* argv[]){
+
 	if ( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER ) ){
 		return 1;
 	}
 	if ( TTF_Init() ){
 		return 2;
 	}
+	SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN);
 	Uint32 frame_start, frame_time;
 	printf("Trying to start a game... ");
 	if( Game::getInstance()->create() ){

@@ -8,38 +8,36 @@ bool Game::create(){
 							SCR_WIDTH, SCR_HEIGHT,
 							SDL_WINDOW_OPENGL);
 	if(!main_window){
-		printf("Err: main window creation failed\n");
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR,"Err: main window creation failed\n");
 		return false;
 	}
+
 	renderer = SDL_CreateRenderer(main_window, -1, 0);
 	if(!renderer){
-		printf("Err: renderer creation failed\n");
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR,"Err: renderer creation failed\n");
 		return false;
 	}
 	SDL_Surface *ico;
 	ico = SDL_LoadBMP("res/ico.bmp");
 	if(!ico){
-		printf("Err: no icon found\n");
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR,"Err: no icon found\n");
 		return false;
 	}
 	SDL_SetWindowIcon(main_window, ico);
-
 	SDL_SetRenderDrawColor(renderer, 74, 53, 91, 255);
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
 
 	main_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCR_WIDTH, SCR_HEIGHT);
 	if(!main_texture){
-		printf("Err: main texture creation failed\n");
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR,"Err: main texture creation failed\n");
 		return false;
 	}
 	SDL_RenderCopy(renderer, main_texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
-	GameManager::getInstance()->loadImg("res/spritesheet.bmp");
-	GameManager::getInstance()->createTex("catting_default", 0, 0, TILEW, TILEH);
-//	GameManager::getInstance()->createTex("void",    0,       0,      TILEW,  TILEH);
-//	GameManager::getInstance()->createTex("floor",   TILEW*2, 0,      TILEW,  TILEH);
-	GameManager::getInstance()->loadFont("res/OdibeeSans.ttf");
+	GameManager::getInstance()->loadSuperTexture("res/spritesheet.bmp");
+
+	GameManager::getInstance()->loadFont("res/BalsamiqSans.ttf");
 
 	GameManager::getInstance()->pushState(new PlayState());
 
@@ -54,7 +52,7 @@ bool Game::isRunning(){
 
 void Game::stop(){
 	running = false;
-	printf("Stopping the game...\n");
+	SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION,"Stopping the game...\n");
 }
 
 void Game::handleEvents(){
