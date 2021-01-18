@@ -13,4 +13,6 @@ public:
 	~Catting() override {};
 	void update() override;
 	void onCollide(BaseEntity*) override;
+	void render() override;
+	void setReserve(Uint8);
 };

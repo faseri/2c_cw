@@ -23,6 +23,8 @@ public:
 	static void update();
 	bool isKeyDown(SDL_Scancode key);
 	bool isMBDown(int button);
+	Sint32 getMouseX();
+	Sint32 getMouseY();
 private:
 	InputHandler(){
 		mouseX = 0;

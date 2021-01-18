@@ -35,10 +35,14 @@ BaseEntity::~BaseEntity(){
 
 void BaseEntity::render(){
 	offset = { (Sint16)(posX), (Sint16)(posY), TILEW, TILEH};
-	SDL_RenderCopy(Game::getInstance()->getRenderer(),
-					GameManager::getInstance()->getSheet(),
-					GameManager::getInstance()->getRekt(texX, texY),
-					&offset);
+	SDL_RenderCopyEx(Game::getInstance()->getRenderer(),
+			GameManager::getInstance()->getSheet(),
+			GameManager::getInstance()->getRekt(texX, texY),
+			&offset, 0, 0,
+			SDL_FLIP_NONE);
+}
+void BaseEntity::setReserve(Uint8 a){
+
 }
 void BaseEntity::onCollide(BaseEntity* another){
 
@@ -92,5 +96,9 @@ void BaseEntity::setTexState(Uint16 x,Uint16 y){
 	texY = y;
 }
 
-
-
+bool BaseEntity::isSolid(){
+	return solid;
+}
+void BaseEntity::setSolid(bool rly){
+	solid = rly;
+}

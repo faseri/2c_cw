@@ -10,4 +10,9 @@
 
 #define LOG_NEWENTITY printf("add x:%d y:%d hp:%d\n",(int)posX,(int)posY,hp);
 
+#define MOUSEX InputHandler::getInstance()->getMouseX()
+#define MOUSEY InputHandler::getInstance()->getMouseY()
+#define RENDERER Game::getInstance()->getRenderer()
+#define SHEET GameManager::getInstance()->getSheet()
+#define CURSORRECT GameManager::getInstance()->getRekt(2,5)
 

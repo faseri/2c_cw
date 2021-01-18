@@ -49,6 +49,12 @@ void InputHandler::onMouseMove(SDL_Event& event) {
 	mouseX = event.motion.x;
 	mouseY = event.motion.y;
 }
+Sint32 InputHandler::getMouseX(){
+	return mouseX;
+}
+Sint32 InputHandler::getMouseY(){
+	return mouseY;
+}
 // SDL_BUTTON_LEFT = 1
 // SDL_BUTTON_MIDDLE = 2
 // SDL_BUTTON_RIGHT	= 3

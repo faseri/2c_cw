@@ -1,13 +1,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-
 #include <vector>
 
 #pragma once
 
 #include "../utils/GlobalVars.hpp"
 #include "../utils/InputHandler.hpp"
-//#include "GameStates/MenuState.hpp"
 #include "GameStates/PlayState.hpp"
 
 #include "GameManager.hpp"

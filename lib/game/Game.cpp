@@ -12,7 +12,7 @@ bool Game::create(){
 		return false;
 	}
 
-	renderer = SDL_CreateRenderer(main_window, -1, 0);
+	renderer = SDL_CreateRenderer(main_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if(!renderer){
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR,"Err: renderer creation failed\n");
 		return false;
