@@ -16,14 +16,15 @@ void Catting::update(){
 		}
 		// freefall
 		case 1:{
-			posY += velY;
+			posY += 2*velY;
 			break;
 		}
 		//slowfall
-		case 3:{
-
+		case 2:{
+			posY += velY;
 			break;
 		}
+		default: break;
 	}
 	++texY;
 	if(texY / 4 >= 4) {
@@ -44,26 +45,36 @@ void Catting::render(){
 void Catting::setReserve(Uint8 a){
 	switch(a){
 	case 0: {
+		posY-=2;
 		texX = 9;
-		velY = 0;
 		break;
 		}
 	case 1:{
+		if(!state) posX+=velX;
 		texX = 14;
-		velY = 1.5;
 		break;
 		}
 	case 2:{
-		velY = 1;
 		texX = 12;
 		break;
 		}
 	}
+	state = a;
 }
 
 void Catting::onCollide(BaseEntity* other){
 	printf("turn\n");
-	posX -= velX;
-	velX = -velX;
-	setReserve(0);
+	switch(state){
+	case 0:{
+		posX -= velX;
+		velX = -velX;
+		break;
+	}
+	case 1:
+	case 2:{
+		setReserve(0);
+		break;
+	}
+	default: break;
+	}
 }

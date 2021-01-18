@@ -12,8 +12,7 @@ protected:
 	float velX, velY;
 	Uint8 texX, texY;
 	SDL_Rect offset;
-	bool solid=true;
-	Uint8 state=0;
+	Uint8 state;
 public:
 	BaseEntity(Sint16, Sint16, Uint16, Uint16, int, Uint8, Uint8);
 	BaseEntity(Sint16, Sint16, Uint16, Uint16, int);
@@ -37,6 +36,6 @@ public:
 	Uint16 getTexY();
 	void setTexState(Uint16 x, Uint16 y);
 	virtual void setReserve(Uint8);
-	bool isSolid();
-	void setSolid(bool);
+	Uint8 getState();
+
 };

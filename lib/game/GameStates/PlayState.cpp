@@ -8,22 +8,61 @@ void PlayState::update() {
 //		GameManager::getInstance()->pushState(new PauseState());
 //		return;
 //	}
-
+	mouse->update();
+	if(cats_spawned <= cats_max){
+		spawner->update();
+		if(spawner->getHP()){
+			cats_spawned++;
+			entities.push_back(new Catting(spawner->getPosX(),spawner->getPosY(),TILEW-4,TILEH-2,8));
+			entities.back()->setReserve(2);
+		}
+	}
 	for(i = 0; i < entities.size();++i){
 		entities[i]->update();
 		for(j = 0; j < blocks.size();++j){
 			if(collides(entities[i],blocks[j])){
-				if(blocks[j]->isSolid())
-					blocks[j]->onCollide(entities[i]);
+				blocks[j]->onCollide(entities[i]);
+			}
+			if(blocks[j]->getHP()<1){
+				printf("died %d\n",j);
+				blocks.erase(blocks.begin()+j);
 			}
 		}
-//		if(!level[(Uint8)(entities[i]->getPosY()/64)+1][(Uint8)(entities[i]->getPosX()/64)]){
-//			printf("fall?");
-//		}
+		if(!(entities[i]->getVelX()-1)){
+			if(!level[(Uint8)((entities[i]->getPosY()/64+1)*10)+(Uint8)(entities[i]->getPosX()/64)]){
+				if(!entities[i]->getState())
+					entities[i]->setReserve(1);
+			}
+		} else {
+			if(!level[(Uint8)((entities[i]->getPosY()/64+1)*10)+(Uint8)(entities[i]->getPosX()/64+1)]){
+				if(!entities[i]->getState())
+					entities[i]->setReserve(1);
+			}
+		}
 
-//		if(!level[(entities[i]->getPosX()>>6)<<6][((entities[i]->getPosY()>>6)<<6)-1]){
-//			entities[i]->setVelY(1); entities[i]->setVelX(0);
-//		} else { entities[i]->setVelY(0); entities[i]->setVelX(1); }
+		if(entities[i]->getHP()<1){
+			printf("cat %d died or exited\n",j);
+			entities.erase(entities.begin()+i);
+		}
+	}
+	if(InputHandler::getInstance()->isMBDown(1)){
+		printf("%d\n",SDL_GetTicks()-lastclick);
+		k=0;
+		if(SDL_GetTicks()-lastclick>500){
+			for(Uint32 j = 0; j < blocks.size();++j){
+				if(collides(mouse, blocks[j])){
+						k++;
+						mouse->onCollide(blocks[j]);
+						lastclick = SDL_GetTicks();
+				}
+			}
+		}
+		if(SDL_GetTicks()-lastclick>500){
+			if(!k) {
+				blocks.push_back(new Umbrella( mouse->getPosX()+2,mouse->getPosY(),TILEW-2,TILEH/2,100,2,1));
+				lastclick = SDL_GetTicks();
+			}
+		}
 	}
 
 }
@@ -35,11 +74,11 @@ void PlayState::render() {
 	for(Uint32 i=0; i < blocks.size(); ++i){
 		blocks[i]->render();
 	}
+	spawner->render();
 	renderOverlay();
 }
 
 bool PlayState::onEnter() {
-	entities.push_back(new Catting(64,64,TILEW,TILEH-1,100));
 	std::ifstream in{"res/levels.st"};
 	int x;
 	while((in >> x) && in.ignore()){
@@ -53,7 +92,6 @@ bool PlayState::onEnter() {
 			printf("[%d,%d]%d-",j,i,level[j+10*i]);
 			switch(level[j+10*i]){
 				case 1:
-				case 20:
 				case 21:
 				case 33:
 				case 66:
@@ -63,12 +101,13 @@ bool PlayState::onEnter() {
 					blocks.push_back(new Solidblock(j*TILEW,i*TILEH,TILEW,TILEH-4,100,(level[j+10*i]-1)%16,(level[j+10*i]-1)/16));
 					break;
 				}
+				case 7: exitdoor = new Exitdoor(j*TILEW,i*TILEH,TILEW,TILEH,100); break;
+				case 20: spawner = new Spawner(j*TILEW,i*TILEH,8,TILEH,100); break;
 				default: break;
 			}
 		}
 	}
-
-	SDL_Delay(400);
+	printf("\n");
 	return true;
 }
 
@@ -78,8 +117,7 @@ bool PlayState::onExit() {
 }
 
 void PlayState::renderOverlay(){
-	overlay_offset = {(MOUSEX>>6)<<6, (MOUSEY>>6)<<6,TILEW,TILEH};
-	SDL_RenderCopy(RENDERER,SHEET,CURSORRECT,&overlay_offset);
+	mouse->render();
 }
 
 double PlayState::distance(BaseEntity* a, BaseEntity* b){
@@ -94,7 +132,7 @@ double PlayState::distance(BaseEntity* a, BaseEntity* b){
 }
 
 bool PlayState::collides(BaseEntity* a, BaseEntity* b) {
-	// Низ а выше чем верх b
+
 	if ( (a->getPosY() + a->getH()) < (b->getPosY()) )	return false;
 	// Правая сторона а дальше чем левая b
 	if ( (a->getPosX() + a->getW()) < (b->getPosX()) )	return false;
@@ -105,8 +143,6 @@ bool PlayState::collides(BaseEntity* a, BaseEntity* b) {
 	// Если ни одна проверка не прошла, то столкновение есть
 	return true;
 }
-
-
 
 std::string PlayState::getStateID() const{
 	return playID;

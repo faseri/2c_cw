@@ -14,6 +14,7 @@ BaseEntity::BaseEntity(Sint16 collX, Sint16 collY, Uint16 collW, Uint16 collH, i
 		velX = 0;
 		velY = 0;
 		offset = {(Sint16)posX,(Sint16)posY,0,0};
+		state =0;
 //		LOG_NEWENTITY
 }
 BaseEntity::BaseEntity(Sint16 collX, Sint16 collY, Uint16 collW, Uint16 collH, int hp){
@@ -27,6 +28,7 @@ BaseEntity::BaseEntity(Sint16 collX, Sint16 collY, Uint16 collW, Uint16 collH, i
 		velX = 0;
 		velY = 0;
 		offset = {(Sint16)posX,(Sint16)posY,0,0};
+		state =0;
 //		LOG_NEWENTITY
 }
 BaseEntity::~BaseEntity(){
@@ -96,9 +98,7 @@ void BaseEntity::setTexState(Uint16 x,Uint16 y){
 	texY = y;
 }
 
-bool BaseEntity::isSolid(){
-	return solid;
+Uint8 BaseEntity::getState(){
+	return state;
 }
-void BaseEntity::setSolid(bool rly){
-	solid = rly;
-}
+

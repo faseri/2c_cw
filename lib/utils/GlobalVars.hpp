@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL2/SDL.h>
 
 #define REQ_DELAY 1000/60
 
@@ -15,4 +16,3 @@
 #define RENDERER Game::getInstance()->getRenderer()
 #define SHEET GameManager::getInstance()->getSheet()
 #define CURSORRECT GameManager::getInstance()->getRekt(2,5)
-

@@ -41,7 +41,7 @@ bool Game::create(){
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, GameManager::getInstance()->getSheet(), NULL, NULL);
 	SDL_RenderPresent(renderer);
-	SDL_Delay(300);
+//	SDL_Delay(300);
 
 	GameManager::getInstance()->pushState(new PlayState());
 
