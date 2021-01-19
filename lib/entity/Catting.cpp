@@ -24,6 +24,10 @@ void Catting::update(){
 			posY += velY;
 			break;
 		}
+		case 3:{
+
+			break;
+		}
 		default: break;
 	}
 	++texY;
@@ -45,7 +49,11 @@ void Catting::render(){
 void Catting::setReserve(Uint8 a){
 	switch(a){
 	case 0: {
-		posY-=2;
+		if(state == 1 || state == 2){
+			posY-=2;
+		} else if(state==3){
+			velX=-velX;
+		}
 		texX = 9;
 		break;
 		}
@@ -58,6 +66,11 @@ void Catting::setReserve(Uint8 a){
 		texX = 12;
 		break;
 		}
+	case 3: {
+		texX=13;
+		break;
+		}
+	default: break;
 	}
 	state = a;
 }

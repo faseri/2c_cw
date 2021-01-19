@@ -13,6 +13,8 @@
 #include "../../entity/Mouse.hpp"
 #include "../../entity/Spawner.hpp"
 #include "../../entity/Exitdoor.hpp"
+#include "../../entity/Stopper.hpp"
+
 
 
 
@@ -34,7 +36,7 @@ protected:
 	bool collides(BaseEntity*, BaseEntity*);
 	void renderOverlay();
 	Uint16 i=0,j=0,k=0;
-	Uint16 lastclick=0;
+	Uint32 lastclick=0;
 	Uint8 cats_max=12,cats_spawned=0,cats_finished=0;
 
 public:
