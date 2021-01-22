@@ -3,8 +3,8 @@
 
 #define REQ_DELAY 1000/60
 
-#define SCR_WIDTH 900
-#define SCR_HEIGHT 666
+#define SCR_WIDTH 640
+#define SCR_HEIGHT 704
 
 #define TILEW 64
 #define TILEH 64

@@ -6,7 +6,7 @@
 
 #include "../utils/GlobalVars.hpp"
 #include "../utils/InputHandler.hpp"
-#include "GameStates/PlayState.hpp"
+#include "GameStates/MenuState.hpp"
 
 #include "GameManager.hpp"
 

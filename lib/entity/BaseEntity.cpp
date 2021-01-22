@@ -59,10 +59,10 @@ Sint16 BaseEntity::getPosX(){
 Sint16 BaseEntity::getPosY(){
 	return posY;
 }
-Uint8 BaseEntity::getW(){
+Uint16 BaseEntity::getW(){
 	return w;
 }
-Uint8 BaseEntity::getH(){
+Uint16 BaseEntity::getH(){
 	return h;
 }
 Uint16 BaseEntity::getVelX(){
@@ -86,6 +86,12 @@ void BaseEntity::setVelX(Uint16 velX){
 }
 void BaseEntity::setVelY(Uint16 velY){
 	this->velY = velX;
+}
+void BaseEntity::setW(Uint16 w){
+	this->w=w;
+}
+void BaseEntity::setH(Uint16 h){
+	this->h=h;
 }
 Uint16 BaseEntity::getTexX(){
 	return texX;

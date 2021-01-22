@@ -31,8 +31,6 @@ bool Game::create(){
 		return false;
 	}
 
-
-
 	GameManager::getInstance()->loadSuperTexture("res/spritesheet.bmp");
 
 	GameManager::getInstance()->loadFont("res/BalsamiqSans.ttf");
@@ -41,9 +39,9 @@ bool Game::create(){
 	SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, GameManager::getInstance()->getSheet(), NULL, NULL);
 	SDL_RenderPresent(renderer);
-//	SDL_Delay(300);
+	GameManager::getInstance()->setFontColor(255,255,255,255);
 
-	GameManager::getInstance()->pushState(new PlayState());
+	GameManager::getInstance()->pushState(new MenuState());
 
 	running = true;
 
@@ -68,7 +66,7 @@ void Game::update(){
 }
 
 void Game::render(){
-	SDL_RenderClear(renderer);
+//	SDL_RenderClear(renderer);
 	GameManager::getInstance()->render();
 	SDL_RenderPresent(renderer);
 }

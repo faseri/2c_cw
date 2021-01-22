@@ -8,9 +8,10 @@ public:
 			BaseEntity{collX,collY,collW,collH,hp,texX,texY}{};
 	Exitdoor(Sint16 collX, Sint16 collY, Uint16 collW, Uint16 collH, int hp) :
 			BaseEntity{collX,collY,collW,collH,hp}
-			{texX = 3; texY = 1;};
+			{texX = 7; texY = 0;};
 	~Exitdoor() override {};
 	void update() override;
 	void onCollide(BaseEntity*) override;
+	void render() override;
 };
 

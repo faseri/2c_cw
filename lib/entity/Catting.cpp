@@ -34,6 +34,9 @@ void Catting::update(){
 	if(texY / 4 >= 4) {
 		texY = 0;
 	}
+	if(posY>SCR_HEIGHT){
+		hp=0;
+	}
 
 }
 
@@ -49,10 +52,11 @@ void Catting::render(){
 void Catting::setReserve(Uint8 a){
 	switch(a){
 	case 0: {
-		if(state == 1 || state == 2){
-			posY-=2;
-		} else if(state==3){
-			velX=-velX;
+		switch(state){
+		case 1: hp=0;
+		case 2: posY-=2; break;
+		case 3: velX=-velX; break;
+		default: break;
 		}
 		texX = 9;
 		break;

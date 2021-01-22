@@ -8,7 +8,7 @@ class BaseEntity{
 protected:
 	int hp;
 	float posX, posY;
-	Uint8 w, h;
+	Uint16 w, h;
 	float velX, velY;
 	Uint8 texX, texY;
 	SDL_Rect offset;
@@ -23,8 +23,8 @@ public:
 	int getHP();
 	Sint16 getPosX();
 	Sint16 getPosY();
-	Uint8 getW();
-	Uint8 getH();
+	Uint16 getW();
+	Uint16 getH();
 	Uint16 getVelX();
 	Uint16 getVelY();
 	void setHP(int health);
@@ -32,6 +32,8 @@ public:
 	void setPosY(Sint16 y);
 	void setVelX(Uint16 velX);
 	void setVelY(Uint16 velY);
+	void setW(Uint16 w);
+	void setH(Uint16 h);
 	Uint16 getTexX();
 	Uint16 getTexY();
 	void setTexState(Uint16 x, Uint16 y);

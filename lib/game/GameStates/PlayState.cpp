@@ -1,22 +1,25 @@
 #include "PlayState.hpp"
 #include <cmath>
 #include <fstream>
-//const std::string PlayState::pauseID = "PAUSE";
 
 void PlayState::update() {
-//	if(InputHandler::getInstance()->isKeyDown(SDL_SCANCODE_ESCAPE)){
-//		GameManager::getInstance()->pushState(new PauseState());
-//		return;
-//	}
+
 	mouse->update();
+	exitdoor->update();
 	if(cats_spawned <= cats_max){
 		spawner->update();
 		if(spawner->getHP()){
 			cats_spawned++;
+			cats_alive++;
 			entities.push_back(new Catting(spawner->getPosX(),spawner->getPosY(),TILEW-4,TILEH-2,8));
 			entities.back()->setReserve(2);
 		}
 	}
+
+	if(!cats_alive && cats_spawned){
+				GameManager::getInstance()->pushState(new GameOverState());
+	}
+
 	for(i = 0; i < entities.size();++i){
 		entities[i]->update();
 		for(j = 0; j < blocks.size();++j){
@@ -47,6 +50,7 @@ void PlayState::update() {
 		if(entities[i]->getHP()<1){
 			printf("cat %d died or exited\n",i);
 			entities.erase(entities.begin()+i);
+			cats_alive--;
 		}
 	}
 	if(InputHandler::getInstance()->isMBDown(1)){
@@ -88,9 +92,14 @@ void PlayState::update() {
 		}
 	}
 
+
+
 }
 
 void PlayState::render() {
+
+	SDL_RenderClear(Game::getInstance()->getRenderer());
+
 	for(Uint32 i=0; i < entities.size(); ++i){
 		entities[i]->render();
 	}
@@ -100,6 +109,8 @@ void PlayState::render() {
 	spawner->render();
 	exitdoor->render();
 	renderOverlay();
+	mouse->render();
+
 }
 
 bool PlayState::onEnter() {
@@ -135,13 +146,23 @@ bool PlayState::onEnter() {
 	return true;
 }
 
-bool PlayState::onExit() {
-
-	return true;
+void PlayState::renderOverlay(){
+	overlay_string = "Дошло коттингов: "+ std::to_string(cats_finished) + " из " + std::to_string(cats_spawned);
+	overlay_surface = TTF_RenderUTF8_Solid(
+			GameManager::getInstance()->getFont(),
+			overlay_string.c_str(),
+			GameManager::getInstance()->getFontColor()
+			);
+	overlay_texture = SDL_CreateTextureFromSurface(Game::getInstance()->getRenderer(),overlay_surface);
+	overlay_offset = {0,0,256,30};
+	SDL_RenderCopy(Game::getInstance()->getRenderer(),overlay_texture,0,&overlay_offset);
+	SDL_FreeSurface(overlay_surface);
 }
 
-void PlayState::renderOverlay(){
-	mouse->render();
+bool PlayState::onExit() {
+	printf("pop state 'game'\n");
+
+	return true;
 }
 
 double PlayState::distance(BaseEntity* a, BaseEntity* b){
