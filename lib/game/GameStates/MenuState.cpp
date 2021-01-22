@@ -134,7 +134,7 @@ std::string MenuState::getStateID() const{
 
 Uint8 MenuState::infoWindow(){
 	if(win2 || ren2) return -1;
-	if(SDL_CreateWindowAndRenderer(600, 150, SDL_WINDOW_SHOWN, &win2, &ren2) < 0) {
+	if(SDL_CreateWindowAndRenderer(600, 120, SDL_WINDOW_SHOWN, &win2, &ren2) < 0) {
 		printf("Failed at SDL_CreateWindowAndRenderer");
 		SDL_Quit();
 		return 1;
@@ -143,7 +143,7 @@ Uint8 MenuState::infoWindow(){
 	SDL_SetWindowIcon(win2, SDL_LoadBMP("res/ico.bmp"));
 	SDL_SetRenderDrawColor( ren2, 74, 53, 91, 255 );
 	SDL_RenderClear(ren2);
-	overlay_string = "Выполнено студентом группы";
+	overlay_string = "Выполнено студентом БГТУ ВОЕНМЕХ";
 	overlay_surface = TTF_RenderUTF8_Solid(
 			GameManager::getInstance()->getFont(),
 			overlay_string.c_str(),
@@ -153,7 +153,7 @@ Uint8 MenuState::infoWindow(){
 	overlay_offset = {20,20,overlay_surface->w,overlay_surface->h};
 	SDL_RenderCopy(ren2,overlay_texture,0,&overlay_offset);
 	SDL_FreeSurface(overlay_surface);
-	overlay_string = "И595 Кривых А.С. в 2020-2021г.";
+	overlay_string = "группы И595 Кривых А.С. в 2020-2021г.";
 		overlay_surface = TTF_RenderUTF8_Solid(
 				GameManager::getInstance()->getFont(),
 				overlay_string.c_str(),
